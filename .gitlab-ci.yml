@@ -12,7 +12,7 @@ stages:
 build-images:
   stage: build
   tags:
-    - ec2-54-184-139-53.us-west-2.compute.amazonaws.com
+    - ec2-54-244-42-224.us-west-2.compute.amazonaws.com
   script:
     - docker build -t ${DOCKER_IMAGE_TAG} --build-arg GIT_SHA=${CI_COMMIT_SHA} --pull .
     - docker push ${DOCKER_IMAGE_TAG}
@@ -34,14 +34,14 @@ build-images:
 check-migrations:
   extends: .test-stage
   tags:
-    - ec2-54-184-139-53.us-west-2.compute.amazonaws.com
+    - ec2-54-244-42-224.us-west-2.compute.amazonaws.com
   script:
     - ${DOCKER_RUN_CMD} bash -c './manage.py makemigrations  | grep "No changes detected"'
 
 run-flake8:
   extends: .test-stage
   tags:
-    - ec2-54-184-139-53.us-west-2.compute.amazonaws.com
+    - ec2-54-244-42-224.us-west-2.compute.amazonaws.com
   rules:
     - allow_failure: true
   script:
@@ -58,7 +58,7 @@ run-unit-tests:
 .deploy:
   stage: deploy
   tags:
-    - ec2-54-184-139-53.us-west-2.compute.amazonaws.com
+    - ec2-54-244-42-224.us-west-2.compute.amazonaws.com
   script:
     - bin/update-config.sh
 
